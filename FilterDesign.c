@@ -43,14 +43,14 @@ void BandPassFilter(float omega_c_upper,float omega_c_lower,float H_d[],int N,in
     }
 }
 
-void FilterChoice(int filteroptions,float omega_c,float omega_c_upper,float omega_c_lower,float H_d[],int N,int Tau)
+void FilterChoice(int filteroptions,float omega_c,float omega_c_upper,float omega_c_lower,float H_d[],int N,int Tau)            //Function to provide choice for Filter
 {
     if(filteroptions==1)
     {
         LowPassFilter(omega_c,H_d,N,Tau);
     }else if(filteroptions==2)
     {
-        HighPassFilter(omega_c,H_d,N,Tau);
+        HighPassFilter(omega_c,H_d,N,Tau);                                              
     }else if(filteroptions==3)
     {
         BandPassFilter(omega_c_upper,omega_c_lower,H_d,N,Tau);
@@ -62,7 +62,7 @@ void FilterChoice(int filteroptions,float omega_c,float omega_c_upper,float omeg
 }
 
 //WINDOW CODE SECTION
-void RectangularWindow(float W_n[],int N)
+void RectangularWindow(float W_n[],int N)                   //Rectangular window function
 {
     for(int i=0;i<N;i++)
     {
@@ -70,7 +70,7 @@ void RectangularWindow(float W_n[],int N)
     }
 }
 
-void HanningWindow(float W_n[],int N)
+void HanningWindow(float W_n[],int N)                       //Hanning window function
 {
     for(int i=0;i<N;i++)
     {
@@ -78,7 +78,7 @@ void HanningWindow(float W_n[],int N)
     }
 }
 
-void HammingWindow(float W_n[],int N)
+void HammingWindow(float W_n[],int N)                       //Hamming window Function(Not to be confused with Hanning window function, they only sound similar)
 {
     for(int i=0;i<N;i++)
     {
@@ -86,7 +86,7 @@ void HammingWindow(float W_n[],int N)
     }
 }
 
-void BartlettWindow(float W_n[],int N,int Tau)
+void BartlettWindow(float W_n[],int N,int Tau)              //Bartlett window function 
 {
     for(int i=0;i<N;i++)
     {
@@ -94,7 +94,7 @@ void BartlettWindow(float W_n[],int N,int Tau)
     }
 }
 
-void BlackmannWindow(float W_n[],int N)
+void BlackmannWindow(float W_n[],int N)                     //Blackmann window function
 {
     for(int i=0;i<N;i++)
     {
@@ -102,7 +102,7 @@ void BlackmannWindow(float W_n[],int N)
     }
 }
 
-void WindowChoice(int windowoptions, float W_n[], int N, int Tau)
+void WindowChoice(int windowoptions, float W_n[], int N, int Tau)           //Window call function
 {
     if(windowoptions==1)
     {
@@ -126,11 +126,11 @@ void WindowChoice(int windowoptions, float W_n[], int N, int Tau)
     }
 }
 
-void FilterCoefficient(float H_d[],float W_n[],int N,float H[])
+void FilterCoefficient(float H_d[],float W_n[],int N,float H[])             //Function to evaluate Filter coefficient h[n]
 {
     for(int n=0;n<N;n++)
     {
-        H[n]=H_d[n]*W_n[n];
+        H[n]=H_d[n]*W_n[n];                                                 //Term by term multiplication
     }
     printf("Filter Coefficients h_d[n] = {");
     for(int i=0;i<N;i++)
@@ -143,7 +143,7 @@ void FilterCoefficient(float H_d[],float W_n[],int N,float H[])
     printf("}\n");
 }
 
-void DisplayH_z(float H[],int N)
+void DisplayH_z(float H[],int N)                                //Function to display System function H(z)
 {
     printf("H[z] = ");
     for(int i=0;i<N;i++)
@@ -158,24 +158,23 @@ void DisplayH_z(float H[],int N)
 
 int main()
 {
-    int filteroptions,N,Tau,windowoptions;
-    float omega_c,omega_c_upper,omega_c_lower;
+    int filteroptions,N,Tau,windowoptions;                                                          //Declaration of variables
+    float omega_c,omega_c_upper,omega_c_lower;                                                      //
     printf("Please Specify the Type of Filter(Press the Number assigned to the filter)\n");
     printf("1. Low Pass Filter\n");
     printf("2. High Pass Filter\n");
     printf("3. Band Pass Filter\n");
     printf("Your Filter Choice: \n");
     scanf("%d",&filteroptions);
-    if(filteroptions==1 || filteroptions==2)
+    if(filteroptions==1 || filteroptions==2)                                                //Standard input in radians/second for Low pass and high pass filters
     {
-        printf("Provide cutoff frequency: ");
+        printf("Provide cutoff frequency(in radians/second): ");
         scanf("%f",&omega_c);
     }
-    else if(filteroptions==3)
+    else if(filteroptions==3)                                                                //Separation in input condition for BandPass filter               
     {
-        printf("Provide cutoff frequencies: [Lower] [Upper]: ");
-        scanf("%f",&omega_c_lower);
-        scanf("%f",&omega_c_upper);
+        printf("Provide cutoff frequencies(in radians/second): [Lower] [Upper]: ");
+        scanf("%f %f",&omega_c_lower,&omega_c_upper);
     }
     printf("Enter Number of samples to analyse(N): \n");
     scanf("%d",&N);
@@ -189,9 +188,9 @@ int main()
     printf("5. Blackmann Window\n");
     printf("Your Window Choice: \n");
     scanf("%d",&windowoptions);
-    FilterChoice(filteroptions, omega_c, omega_c_upper,omega_c_lower, H_d, N, Tau);
-    WindowChoice(windowoptions, W_n, N, Tau);
-    FilterCoefficient(H_d,W_n,N,H);
-    DisplayH_z(H,N);
+    FilterChoice(filteroptions, omega_c, omega_c_upper,omega_c_lower, H_d, N, Tau);         //Filter choice function call
+    WindowChoice(windowoptions, W_n, N, Tau);                                               //Window choice function call 
+    FilterCoefficient(H_d,W_n,N,H);                                                         //Filter coefficient evaluation function call
+    DisplayH_z(H,N);                                                                        //Final System function  
     return 0;
 }
