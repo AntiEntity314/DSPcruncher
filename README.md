@@ -19,7 +19,7 @@ A C-based digital signal processing tool for designing **Finite Impulse Response
   * Blackman
 * Calculates the ideal impulse response (h_d[n])
 * Applies the selected window to obtain the final filter coefficients (h[n])
-* Displays the resulting transfer function (H(z)
+* Displays the resulting transfer function (H(z))
 
 ## Compilation
 
