@@ -156,6 +156,16 @@ void DisplayH_z(float H[],int N)                                //Function to di
     printf("\n");
 }
 
+void Nchecker(int N)
+{
+    if(N%2==0){
+        printf("You have entered ");
+        printf("N must be odd...\n");
+        printf("Exiting program...\n");
+        exit(0);
+    }
+}
+
 int main()
 {
     int filteroptions,N,Tau,windowoptions;                                                          //Declaration of variables
@@ -176,8 +186,9 @@ int main()
         printf("Provide cutoff frequencies(in radians/second): [Lower] [Upper]: ");
         scanf("%f %f",&omega_c_lower,&omega_c_upper);
     }
-    printf("Enter Number of samples to analyse(N): \n");
+    printf("Enter Number of samples to analyse(Odd N): \n");
     scanf("%d",&N);
+    Nchecker(N);
     Tau=(N-1)/2;
     float H_d[N],W_n[N],H[N];
     printf("Please specify the Window(Press the Number assigned to the window)\n");
