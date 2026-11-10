@@ -45,19 +45,19 @@ void BandPassFilter(float omega_c_upper,float omega_c_lower,float H_d[],int N,in
 
 void FilterChoice(int filteroptions,float omega_c,float omega_c_upper,float omega_c_lower,float H_d[],int N,int Tau)            //Function to provide choice for Filter
 {
-    if(filteroptions==1)
-    {
-        LowPassFilter(omega_c,H_d,N,Tau);
-    }else if(filteroptions==2)
-    {
-        HighPassFilter(omega_c,H_d,N,Tau);                                              
-    }else if(filteroptions==3)
-    {
-        BandPassFilter(omega_c_upper,omega_c_lower,H_d,N,Tau);
-    }else
-    {
-        printf("Invalid Choice, returning to ");
-        exit(0);
+    switch(filteroptions){
+        case 1:
+            LowPassFilter(omega_c,H_d,N,Tau);
+            break;
+        case 2:
+            HighPassFilter(omega_c,H_d,N,Tau);
+            break;
+        case 3:
+            BandPassFilter(omega_c_upper,omega_c_lower,H_d,N,Tau);
+            break;
+        default:
+            printf("Invalid Choice, returning to ");
+            exit(0);
     }
 }
 
@@ -104,25 +104,25 @@ void BlackmannWindow(float W_n[],int N)                     //Blackmann window f
 
 void WindowChoice(int windowoptions, float W_n[], int N, int Tau)           //Window call function
 {
-    if(windowoptions==1)
-    {
-        RectangularWindow(W_n,N);
-    }else if(windowoptions==2)
-    {
-        HanningWindow(W_n,N);
-    }else if(windowoptions==3)
-    {
-        HammingWindow(W_n,N);
-    }else if(windowoptions==4)
-    {
-        BartlettWindow(W_n,N,Tau);
-    }else if(windowoptions==5)
-    {
-        BlackmannWindow(W_n,N);
-    }else
-    {
-        printf("Invalid Choice, returning back....");
-        exit(0);
+    switch(windowoptions){
+        case 1:
+            RectangularWindow(W_n,N);
+            break;
+        case 2:
+            HanningWindow(W_n,N);
+            break;
+        case 3:
+            HammingWindow(W_n,N);
+            break;
+        case 4:
+            BartlettWindow(W_n,N,Tau);
+            break;
+        case 5:
+            BlackmannWindow(W_n,N);
+            break;
+        default:
+            printf("Invalid Choice, returning back....");
+            exit(0);
     }
 }
 
