@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include <math.h>
 #define PI 3.14159265358979323846           //PI defined till 20 digits for precision
 
@@ -57,7 +58,7 @@ void FilterChoice(int filteroptions,float omega_c,float omega_c_upper,float omeg
             break;
         default:
             printf("Invalid Choice, returning to ");
-            exit(0);
+            exit(1);
     }
 }
 
@@ -122,7 +123,7 @@ void WindowChoice(int windowoptions, float W_n[], int N, int Tau)           //Wi
             break;
         default:
             printf("Invalid Choice, returning back....");
-            exit(0);
+            exit(1);
     }
 }
 
@@ -158,24 +159,31 @@ void DisplayH_z(float H[],int N)                                //Function to di
 
 void Nchecker(int N)
 {
-    if(N%2==0){
-        printf("You have entered ");
-        printf("N must be odd...\n");
-        printf("Exiting program...\n");
-        exit(0);
+    if(isdigit(N)){
+        printf("You have entered invalid value of N\n");
+        exit(1);
+        if(N%2==0)
+        {
+            printf("N must be odd...\n");
+            printf("Exiting program...\n");
+            exit(1);
+        }
     }
+    
 }
 
 int main()
 {
     int filteroptions,N,Tau,windowoptions;                                                          //Declaration of variables
     float omega_c,omega_c_upper,omega_c_lower;                                                      //
+
     printf("Please Specify the Type of Filter(Press the Number assigned to the filter)\n");
     printf("1. Low Pass Filter\n");
     printf("2. High Pass Filter\n");
     printf("3. Band Pass Filter\n");
     printf("Your Filter Choice: \n");
     scanf("%d",&filteroptions);
+
     if(filteroptions==1 || filteroptions==2)                                                //Standard input in radians/second for Low pass and high pass filters
     {
         printf("Provide cutoff frequency(in radians/second): ");
@@ -186,6 +194,7 @@ int main()
         printf("Provide cutoff frequencies(in radians/second): [Lower] [Upper]: ");
         scanf("%f %f",&omega_c_lower,&omega_c_upper);
     }
+
     printf("Enter Number of samples to analyse(Odd N): \n");
     scanf("%d",&N);
     Nchecker(N);
