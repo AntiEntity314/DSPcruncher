@@ -107,7 +107,7 @@ void WindowChoice(int windowoptions, float W_n[], int N, int Tau)           //Wi
 {
     switch(windowoptions){
         case 1:
-            RectangularWindow(W_n,N);
+            RectangularWindow(W_n,N);    //calls rectangular window
             break;
         case 2:
             HanningWindow(W_n,N);
